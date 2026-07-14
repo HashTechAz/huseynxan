@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -15,7 +16,7 @@ import {
 import { HomeHero } from "@/components/home/home-hero";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
 import { ProductCard } from "@/components/product/product-card";
-import { ProductImage } from "@/components/product/product-image";
+import { FounderImageSlot } from "@/components/shared/founder-image-slot";
 import { HeritagePattern } from "@/components/shared/heritage-pattern";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Badge } from "@/components/ui/badge";
@@ -74,8 +75,6 @@ export default function HomePage() {
   const individualFragrances = getAllProducts().filter((product) => product.category === "fragrances");
   const featured = requireProduct("kings-town");
   const discoverySet = requireProduct("four-scents-of-baku");
-  const featuredImage = featured.images[0];
-  const discoveryImage = discoverySet.images[0];
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -115,9 +114,14 @@ export default function HomePage() {
       <Section tone="surface" spacing="lg">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-24">
-            <div className="relative min-h-80 overflow-hidden border border-border bg-background p-10 sm:min-h-[28rem]">
-              <p className="font-display text-[8rem] leading-none text-antique-gold/20 sm:text-[12rem]">1792</p>
-              <HeritagePattern className="absolute right-[-5rem] bottom-12 w-[28rem] opacity-[0.18]" />
+            <div className="relative aspect-[89/69] overflow-hidden border border-border bg-background">
+              <Image
+                src="/images/story/four-scents-heritage-set.webp"
+                alt="Useynkhan1792 Four Scents of Baku kolleksiyasının açıq qutuda dörd ətiri"
+                fill
+                sizes="(min-width: 1280px) 32rem, (min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
             </div>
             <div>
               <SectionHeading
@@ -126,7 +130,7 @@ export default function HomePage() {
               />
               <div className="mt-8 space-y-5 leading-8 text-muted-foreground">
                 <p>
-                  1792 Hüseynqulu xanın doğum ilidir. Bakı xanı kimi onun adı şəhərin tarixi iradəsi və yaddaşı ilə bağlıdır.
+                  1792 Useynqulu xanın doğum ilidir. Bakı xanı kimi onun adı şəhərin tarixi iradəsi və yaddaşı ilə bağlıdır.
                 </p>
                 <p>
                   Useynkhan1792 bu tarixi adı müasir niş parfümeriya dili ilə davam etdirir; keçmişi romantikləşdirmədən, Bakının daşında, küləyində və çoxqatlı xarakterində yaşayan izlərə diqqət yönəldir.
@@ -143,16 +147,15 @@ export default function HomePage() {
       <Section tone="dark" spacing="lg">
         <Container wide>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24">
-            {featuredImage ? (
-              <ProductImage
-                image={featuredImage}
+            <div className="relative aspect-[4/5] overflow-hidden border border-stone/20 bg-dark-section">
+              <Image
+                src="/images/products/kings-town/kings-town-editorial.webp"
+                alt="King’s Town ətri və Useynkhan1792 kolleksiyasının kraft qablaşdırması"
+                fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-[4/5] border border-stone/20 bg-dark-section"
-                imageClassName="opacity-90"
+                className="object-cover"
               />
-            ) : (
-              <div className="aspect-[4/5] border border-stone/20" aria-hidden="true" />
-            )}
+            </div>
             <div className="max-w-xl">
               <p className="text-eyebrow text-antique-gold">Seçilmiş ətir</p>
               <h2 className="text-display-lg mt-7">{featured.name}</h2>
@@ -193,15 +196,15 @@ export default function HomePage() {
                 </LinkButton>
               </div>
             </div>
-            {discoveryImage ? (
-              <ProductImage
-                image={discoveryImage}
+            <div className="relative aspect-square overflow-hidden border border-border bg-surface">
+              <Image
+                src="/images/products/four-scents-of-baku/discovery-set-packaging.webp"
+                alt="Useynkhan1792 Four Scents of Baku Discovery Set kraft qutusu"
+                fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-[5/4] border border-border bg-surface"
+                className="object-cover"
               />
-            ) : (
-              <div className="aspect-[5/4] border border-border bg-surface" aria-hidden="true" />
-            )}
+            </div>
           </div>
         </Container>
       </Section>
@@ -209,16 +212,13 @@ export default function HomePage() {
       <Section tone="surface" spacing="lg">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24">
-            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden border border-border bg-background" role="img" aria-label="Paris Malik Hüseynqulu xan qızı üçün portret yeri">
-              <HeritagePattern className="absolute w-[26rem] rotate-90 opacity-[0.14]" />
-              <div className="relative flex size-28 items-center justify-center border border-antique-gold/40 font-display text-4xl text-antique-gold">PM</div>
-            </div>
+            <FounderImageSlot />
             <div>
               <p className="text-eyebrow text-antique-gold">Qurucu</p>
               <h2 className="text-heading-lg mt-7">İrsin davamı</h2>
-              <p className="mt-7 font-display text-3xl">Paris Malik Hüseynqulu xan qızı</p>
+              <p className="mt-7 font-display text-3xl">Paris Malik Useynqulu xan qızı</p>
               <p className="mt-7 max-w-2xl leading-8 text-muted-foreground">
-                Useynkhan1792 brendinin qurucusu və Hüseynqulu xanın nəslinin nümayəndəsidir. Brend vasitəsilə ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
+                Useynkhan1792 brendinin qurucusu və Useynqulu xanın nəslinin nümayəndəsidir. Brend vasitəsilə ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
               </p>
               <LinkButton className="mt-10" href="/about" variant="outline">
                 Haqqımızda <ArrowRight aria-hidden="true" size={15} />
