@@ -42,9 +42,11 @@ export function Footer() {
                 {siteConfig.whatsappDisplayNumber}
               </a>
             </p>
-            {siteConfig.instagramUrl ? (
-              <p><a className="transition-colors hover:text-dark-foreground" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram</a></p>
-            ) : null}
+            <p>
+              <a className="transition-colors hover:text-dark-foreground" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+                Instagram
+              </a>
+            </p>
           </div>
         </div>
       </Container>

@@ -12,14 +12,14 @@ import "@/styles/globals.css";
 
 const displayFont = Cormorant_Garamond({
   variable: "--font-cormorant",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   weight: ["500", "600"],
   display: "swap",
 });
 
 const bodyFont = Manrope({
   variable: "--font-manrope",
-  subsets: ["latin", "latin-ext"],
+  subsets: ["latin"],
   display: "swap",
 });
 

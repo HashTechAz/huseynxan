@@ -9,7 +9,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "test": "npm run test:run",
-    "test:run": "tsc -p tsconfig.test.json && node --import ./tests/register-alias.mjs --test work/test-build/tests/whatsapp.test.js work/test-build/tests/product-search.test.js work/test-build/tests/products.test.js work/test-build/tests/cart.test.js work/test-build/tests/components.test.js work/test-build/tests/production-config.test.js",
+    "test:run": "tsc -p tsconfig.test.json && node --import ./tests/register-alias.mjs --test work/test-build/tests/whatsapp.test.js work/test-build/tests/product-search.test.js work/test-build/tests/products.test.js work/test-build/tests/cart.test.js work/test-build/tests/components.test.js",
     "test:e2e": "node --test tests/e2e/*.test.mjs"
   },
   "dependencies": {

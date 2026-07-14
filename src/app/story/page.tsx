@@ -39,7 +39,7 @@ export default function StoryPage() {
               <p className="text-eyebrow text-antique-gold">Adın başlanğıcı</p>
               <h2 className="text-heading-lg mt-7">Bir tarixdən brend yaddaşına</h2>
               <div className="mt-8 space-y-5 leading-8 text-muted-foreground">
-              <p>1792 Useynqulu xanın doğum ilidir. Bu tarix brendin adında ailə yaddaşı ilə müasir yaradıcı ifadə arasında əlaqə yaradır.</p>
+                <p>1792 Hüseynqulu xanın doğum ilidir. Bu tarix brendin adında ailə yaddaşı ilə müasir yaradıcı ifadə arasında əlaqə yaradır.</p>
                 <p>Rəqəm burada keçmişə nostalji baxışdan daha çox, yadda saxlanılan bir başlanğıcı və Bakıya bağlılığın davamlılığını bildirir.</p>
               </div>
               <div className="mt-9 max-w-lg"><EditorialNote /></div>
@@ -56,7 +56,7 @@ export default function StoryPage() {
               <h2 className="text-heading-lg mt-7">Şəhərin iradəsini xatırladan ad</h2>
             </div>
             <div className="space-y-6 text-base leading-8 text-stone sm:text-lg">
-              <p>Useynqulu xan Bakı xanı idi. Onun adı şəhərin siyasi, mədəni və tarixi yaddaşının bir hissəsi kimi ailə irsində qorunur.</p>
+              <p>Hüseynqulu xan Bakı xanı idi. Onun adı şəhərin siyasi, mədəni və tarixi yaddaşının bir hissəsi kimi ailə irsində qorunur.</p>
               <p>Useynkhan1792 bu yaddaşı bir hadisənin dramatik təsvirinə endirmir. Müstəqillik və iradə mövzuları brendin yaradıcı baxışında Bakının öz xarakterini qorumaq qabiliyyətini ifadə edən təmkinli anlayışlardır.</p>
               <p>Tarix satış dekoru deyil; brendə məsuliyyət, ölçü və mənşə hissi verən sakit bir təməldir.</p>
             </div>

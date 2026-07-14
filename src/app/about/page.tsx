@@ -12,7 +12,7 @@ import { SectionHeading } from "@/components/ui/section-heading";
 import { brand } from "@/data/brand";
 import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = createPageMetadata({ title: "İrsin davamı — Haqqımızda", description: "Useynkhan1792 brendinin missiyası, qurucusu Paris Malik Useynqulu xan qızı və Bakıdan ilhamlanan dəyərləri.", path: "/about" });
+export const metadata: Metadata = createPageMetadata({ title: "İrsin davamı — Haqqımızda", description: "Useynkhan1792 brendinin missiyası, qurucusu Paris Malik Hüseynqulu xan qızı və Bakıdan ilhamlanan dəyərləri.", path: "/about" });
 
 const values = [
   { title: "Tarixə hörmət", description: "Tarixi sensasiyaya çevirmədən, mənşəyə ölçülü və məsuliyyətli münasibət.", icon: Landmark },
@@ -58,9 +58,9 @@ export default function AboutPage() {
             <FounderImageSlot />
             <div>
               <p className="text-eyebrow text-antique-gold">Qurucu</p>
-              <h2 className="text-heading-lg mt-7">Paris Malik Useynqulu xan qızı</h2>
+              <h2 className="text-heading-lg mt-7">Paris Malik Hüseynqulu xan qızı</h2>
               <p className="mt-8 max-w-2xl text-base leading-8 text-muted-foreground sm:text-lg">
-                Useynkhan1792 brendinin qurucusu və Useynqulu xanın nəslinin nümayəndəsi Paris Malik Useynqulu xan qızı ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
+                Useynkhan1792 brendinin qurucusu və Hüseynqulu xanın nəslinin nümayəndəsi Paris Malik Hüseynqulu xan qızı ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
               </p>
               <div className="mt-9 max-w-lg"><EditorialNote /></div>
             </div>
