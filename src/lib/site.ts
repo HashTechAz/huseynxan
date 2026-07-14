@@ -10,6 +10,9 @@ export function getSiteUrl(): string {
   }
 
   const url = new URL(configuredUrl || LOCAL_SITE_URL);
+  if (url.protocol !== "http:" && url.protocol !== "https:") {
+    throw new Error("NEXT_PUBLIC_SITE_URL http və ya https URL-i olmalıdır.");
+  }
   return url.toString().replace(/\/$/, "");
 }
 
@@ -33,5 +36,6 @@ export const siteConfig = {
   paymentMethod: "Çatdırılma zamanı nağd ödəniş",
   whatsappNumber: "994503950770",
   whatsappDisplayNumber: "+994 50 395 07 70",
-  instagramUrl: "https://www.instagram.com/useynkhan1792/",
+  // Rəsmi hesab biznes sahibi tərəfindən təsdiqləndikdən sonra əlavə edilməlidir.
+  instagramUrl: null as string | null,
 } as const;

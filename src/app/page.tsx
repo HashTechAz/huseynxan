@@ -285,22 +285,22 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section spacing="lg">
-        <Container>
-          <div className="grid gap-10 border-y border-border py-14 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <p className="text-eyebrow text-antique-gold">{brand.slogan}</p>
-              <h2 className="text-heading-md mt-6">Brendin vizual dünyasını izləyin</h2>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">
-                Kolleksiya yenilikləri və Bakıdan ilhamlanan hekayələr üçün bizi Instagram-da izləyin.
-              </p>
+      {siteConfig.instagramUrl ? (
+        <Section spacing="lg">
+          <Container>
+            <div className="grid gap-10 border-y border-border py-14 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <p className="text-eyebrow text-antique-gold">{brand.slogan}</p>
+                <h2 className="text-heading-md mt-6">Brendin vizual dünyasını izləyin</h2>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Kolleksiya yenilikləri və Bakıdan ilhamlanan hekayələr üçün bizi Instagram-da izləyin.</p>
+              </div>
+              <a className={buttonClassName({ variant: "outline", size: "lg" })} href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+                <Instagram aria-hidden="true" size={17} /> Instagram-da izlə
+              </a>
             </div>
-            <a className={buttonClassName({ variant: "outline", size: "lg" })} href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
-              <Instagram aria-hidden="true" size={17} /> Instagram-da izlə
-            </a>
-          </div>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      ) : null}
     </>
   );
 }

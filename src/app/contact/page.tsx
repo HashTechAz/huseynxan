@@ -9,7 +9,7 @@ import { siteConfig } from "@/lib/site";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
 import { createPageMetadata } from "@/lib/metadata";
 
-export const metadata: Metadata = createPageMetadata({ title: "Əlaqə", description: "Məhsul, sifariş və çatdırılma sualları üçün Useynkhan1792 ilə WhatsApp, telefon və Instagram vasitəsilə əlaqə saxlayın.", path: "/contact" });
+export const metadata: Metadata = createPageMetadata({ title: "Əlaqə", description: "Məhsul, sifariş və çatdırılma sualları üçün Useynkhan1792 ilə WhatsApp və telefon vasitəsilə əlaqə saxlayın.", path: "/contact" });
 
 export default function ContactPage() {
   return (
@@ -36,12 +36,14 @@ export default function ContactPage() {
               <p className="mt-4 text-sm leading-7 text-muted-foreground">Mobil cihazdan nömrəyə birbaşa zəng edə bilərsiniz.</p>
               <a className="mt-7 inline-block font-display text-2xl hover:text-antique-gold" href={`tel:+${siteConfig.whatsappNumber}`}>{siteConfig.whatsappDisplayNumber}</a>
             </article>
-            <article className="bg-surface p-8 sm:p-10">
-              <Instagram className="text-antique-gold" aria-hidden="true" size={25} strokeWidth={1.4} />
-              <h2 className="mt-8 font-display text-3xl">Instagram</h2>
-              <p className="mt-4 text-sm leading-7 text-muted-foreground">Brend yenilikləri üçün Instagram səhifəmizi izləyin.</p>
-              <a className="mt-7 inline-block text-sm font-semibold tracking-[0.1em] uppercase hover:text-antique-gold" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram-a keç</a>
-            </article>
+            {siteConfig.instagramUrl ? (
+              <article className="bg-surface p-8 sm:p-10">
+                <Instagram className="text-antique-gold" aria-hidden="true" size={25} strokeWidth={1.4} />
+                <h2 className="mt-8 font-display text-3xl">Instagram</h2>
+                <p className="mt-4 text-sm leading-7 text-muted-foreground">Brend yenilikləri üçün Instagram səhifəmizi izləyin.</p>
+                <a className="mt-7 inline-block text-sm font-semibold tracking-[0.1em] uppercase hover:text-antique-gold" href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">Instagram-a keç</a>
+              </article>
+            ) : null}
             <article className="bg-background p-8 sm:p-10">
               <MapPin className="text-caspian" aria-hidden="true" size={25} strokeWidth={1.4} />
               <h2 className="mt-8 font-display text-3xl">Məkan</h2>
