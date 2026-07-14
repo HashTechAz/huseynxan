@@ -3,7 +3,7 @@
 import type { ReactNode } from "react";
 import { createContext, useCallback, useEffect, useMemo, useReducer, useState } from "react";
 
-import { cartReducer, createEmptyCart } from "@/lib/cart-reducer";
+import { calculateCartSubtotal, cartReducer, createEmptyCart } from "@/lib/cart-reducer";
 import { getCurrentCartItem } from "@/lib/cart-products";
 import { loadCart, saveCart } from "@/lib/cart-storage";
 import type { CartItem, CartLineInput } from "@/types/cart";
@@ -72,7 +72,7 @@ export function CartProvider({ children }: Readonly<{ children: ReactNode }>) {
     items: state.items,
     isHydrated,
     totalQuantity: state.items.reduce((total, item) => total + item.quantity, 0),
-    subtotal: state.items.reduce((total, item) => total + item.price * item.quantity, 0),
+    subtotal: calculateCartSubtotal(state.items),
     addItem,
     setQuantity,
     removeItem,

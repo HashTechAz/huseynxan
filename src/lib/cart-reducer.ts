@@ -24,6 +24,10 @@ export function isCartExpired(updatedAt: number, now = Date.now()) {
   return !Number.isFinite(updatedAt) || updatedAt > now + 5 * 60 * 1000 || now - updatedAt > CART_TTL_MS;
 }
 
+export function calculateCartSubtotal(items: readonly CartItem[]) {
+  return items.reduce((total, item) => total + item.price * item.quantity, 0);
+}
+
 export function cartReducer(state: CartState, action: CartAction): CartState {
   switch (action.type) {
     case "hydrate":
