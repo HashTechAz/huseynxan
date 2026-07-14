@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "incremental": false,
+    "isolatedModules": false,
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "outDir": "./work/test-build",
+    "plugins": []
+  },
+  "include": ["src/lib/whatsapp.ts", "src/lib/product-search.ts", "tests/*.test.ts"],
+  "exclude": ["node_modules"]
+}

@@ -1,0 +1,306 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+import {
+  ArrowRight,
+  Banknote,
+  Instagram,
+  Landmark,
+  MessageCircle,
+  PackageCheck,
+  Sparkles,
+  Truck,
+  Waves,
+} from "lucide-react";
+
+import { HomeHero } from "@/components/home/home-hero";
+import { AddToCartButton } from "@/components/product/add-to-cart-button";
+import { ProductCard } from "@/components/product/product-card";
+import { ProductImage } from "@/components/product/product-image";
+import { HeritagePattern } from "@/components/shared/heritage-pattern";
+import { JsonLd } from "@/components/shared/json-ld";
+import { Badge } from "@/components/ui/badge";
+import { buttonClassName } from "@/components/ui/button";
+import { Container } from "@/components/ui/container";
+import { Divider } from "@/components/ui/divider";
+import { LinkButton } from "@/components/ui/link-button";
+import { Price } from "@/components/ui/price";
+import { Section } from "@/components/ui/section";
+import { SectionHeading } from "@/components/ui/section-heading";
+import { brand } from "@/data/brand";
+import { getAllProducts, getProductBySlug } from "@/lib/products";
+import { absoluteUrl, siteConfig } from "@/lib/site";
+import { createPageMetadata } from "@/lib/metadata";
+import { createWhatsAppUrl } from "@/lib/whatsapp";
+import type { Product } from "@/types/product";
+
+export const metadata: Metadata = createPageMetadata({
+  title: "Bakının yaddaşından doğan niş ətirlər",
+  description: "Useynkhan1792 — Bakı tarixi, Xəzər nəfəsi və müasir niş parfümeriyanı bir araya gətirən Four Scents of Baku kolleksiyası.",
+  path: "/",
+});
+
+function requireProduct(slug: string): Product {
+  const product = getProductBySlug(slug);
+  if (!product) throw new Error(`Ana səhifə üçün məhsul tapılmadı: ${slug}`);
+  return product;
+}
+
+const values = [
+  {
+    title: "Tarixi irs",
+    description: "Keçmişi dekor kimi deyil, şəhərin yaşayan yaddaşı kimi qəbul edən yanaşma.",
+    icon: Landmark,
+  },
+  {
+    title: "Bakıdan ilham",
+    description: "Daş memarlıq, Xəzər küləyi və şəhərin dəyişən ritmindən yaranan emosional dil.",
+    icon: Waves,
+  },
+  {
+    title: "Niş kompozisiyalar",
+    description: "Fərqli ovqatlar üçün düşünülmüş, xarakterli və ölçülü parfümeriya dünyası.",
+    icon: Sparkles,
+  },
+] as const;
+
+const deliveryItems = [
+  { title: "Çatdırılma", detail: "Bakı və Sumqayıt", icon: Truck },
+  { title: "Ödəniş", detail: "Yerində nağd ödəniş", icon: Banknote },
+  { title: "Təsdiq", detail: "Sifariş WhatsApp-da təsdiqlənir", icon: PackageCheck },
+  { title: "Çatdırılma haqqı", detail: "WhatsApp-da dəqiqləşir", icon: MessageCircle },
+] as const;
+
+export default function HomePage() {
+  const individualFragrances = getAllProducts().filter((product) => product.category === "fragrances");
+  const featured = requireProduct("kings-town");
+  const discoverySet = requireProduct("four-scents-of-baku");
+  const featuredImage = featured.images[0];
+  const discoveryImage = discoverySet.images[0];
+  const organizationJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    name: brand.name,
+    url: absoluteUrl("/"),
+    description: "Bakı irsindən ilhamlanan premium niş ətir brendi.",
+    address: { "@type": "PostalAddress", addressLocality: "Bakı", addressCountry: "AZ" },
+    contactPoint: { "@type": "ContactPoint", telephone: siteConfig.whatsappDisplayNumber, contactType: "customer service", availableLanguage: "az", areaServed: "AZ" },
+    ...(siteConfig.instagramUrl ? { sameAs: [siteConfig.instagramUrl] } : {}),
+  };
+
+  return (
+    <>
+      <JsonLd data={organizationJsonLd} />
+      <HomeHero />
+
+      <Section id="kolleksiya" spacing="lg">
+        <Container wide>
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+            <SectionHeading
+              eyebrow="Four Scents of Baku"
+              title="Şəhərin dörd fərqli ovqatı"
+              description="Gecənin sirrindən Xəzərin açıq nəfəsinə qədər — hər kompozisiya Bakının ayrı bir təəssüratını daşıyır."
+            />
+            <Link className="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:text-antique-gold" href="/products">
+              Bütün məhsullar <ArrowRight aria-hidden="true" size={16} />
+            </Link>
+          </div>
+          <div className="mt-16 grid gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
+            {individualFragrances.map((product) => (
+              <ProductCard key={product.id} product={product} />
+            ))}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="surface" spacing="lg">
+        <Container>
+          <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-24">
+            <div className="relative min-h-80 overflow-hidden border border-border bg-background p-10 sm:min-h-[28rem]">
+              <p className="font-display text-[8rem] leading-none text-antique-gold/20 sm:text-[12rem]">1792</p>
+              <HeritagePattern className="absolute right-[-5rem] bottom-12 w-[28rem] opacity-[0.18]" />
+            </div>
+            <div>
+              <SectionHeading
+                eyebrow="Brendin hekayəsi"
+                title="Bakının yaddaşından doğan bir ad"
+              />
+              <div className="mt-8 space-y-5 leading-8 text-muted-foreground">
+                <p>
+                  1792 Hüseynqulu xanın doğum ilidir. Bakı xanı kimi onun adı şəhərin tarixi iradəsi və yaddaşı ilə bağlıdır.
+                </p>
+                <p>
+                  Useynkhan1792 bu tarixi adı müasir niş parfümeriya dili ilə davam etdirir; keçmişi romantikləşdirmədən, Bakının daşında, küləyində və çoxqatlı xarakterində yaşayan izlərə diqqət yönəldir.
+                </p>
+              </div>
+              <LinkButton className="mt-10" href="/story" variant="outline">
+                Hekayəni oxu <ArrowRight aria-hidden="true" size={15} />
+              </LinkButton>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="dark" spacing="lg">
+        <Container wide>
+          <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24">
+            {featuredImage ? (
+              <ProductImage
+                image={featuredImage}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="aspect-[4/5] border border-stone/20 bg-dark-section"
+                imageClassName="opacity-90"
+              />
+            ) : (
+              <div className="aspect-[4/5] border border-stone/20" aria-hidden="true" />
+            )}
+            <div className="max-w-xl">
+              <p className="text-eyebrow text-antique-gold">Seçilmiş ətir</p>
+              <h2 className="text-display-lg mt-7">{featured.name}</h2>
+              <p className="mt-3 font-display text-2xl text-stone">{featured.subtitle}</p>
+              <p className="mt-8 leading-8 text-stone">{featured.story}</p>
+              <div className="mt-8 flex flex-wrap gap-3">
+                {(["Nəcib", "Balanslı", "Xarakterli"] as const).map((tag) => (
+                  <Badge className="border-stone/30 text-stone" key={tag}>{tag}</Badge>
+                ))}
+              </div>
+              <div className="mt-10 flex items-center gap-7">
+                <Price className="font-display text-3xl" amount={featured.price} currency={featured.currency} />
+                <LinkButton href={`/products/${featured.slug}`} variant="secondary">
+                  Məhsula bax <ArrowRight aria-hidden="true" size={15} />
+                </LinkButton>
+              </div>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="lg">
+        <Container wide>
+          <div className="grid gap-14 lg:grid-cols-[0.9fr_1.1fr] lg:items-center lg:gap-24">
+            <div className="max-w-xl">
+              <p className="text-eyebrow text-caspian">Discovery Set</p>
+              <h2 className="text-heading-lg mt-7 text-balance">Dörd qoxu. Dörd Bakı təəssüratı.</h2>
+              <p className="mt-7 leading-8 text-muted-foreground">{discoverySet.description}</p>
+              <div className="mt-8 flex items-center gap-6 border-y border-border py-5">
+                <span className="text-sm text-muted-foreground">4 × 13 ml</span>
+                <Divider className="w-10" />
+                <Price className="font-display text-3xl" amount={discoverySet.price} currency={discoverySet.currency} />
+              </div>
+              <div className="mt-9 flex flex-col gap-3 sm:flex-row">
+                <AddToCartButton productId={discoverySet.id} size="lg" />
+                <LinkButton href={`/products/${discoverySet.slug}`} variant="outline" size="lg">
+                  Ətraflı bax
+                </LinkButton>
+              </div>
+            </div>
+            {discoveryImage ? (
+              <ProductImage
+                image={discoveryImage}
+                sizes="(min-width: 1024px) 50vw, 100vw"
+                className="aspect-[5/4] border border-border bg-surface"
+              />
+            ) : (
+              <div className="aspect-[5/4] border border-border bg-surface" aria-hidden="true" />
+            )}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="surface" spacing="lg">
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24">
+            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden border border-border bg-background" role="img" aria-label="Paris Malik Hüseynqulu xan qızı üçün portret yeri">
+              <HeritagePattern className="absolute w-[26rem] rotate-90 opacity-[0.14]" />
+              <div className="relative flex size-28 items-center justify-center border border-antique-gold/40 font-display text-4xl text-antique-gold">PM</div>
+            </div>
+            <div>
+              <p className="text-eyebrow text-antique-gold">Qurucu</p>
+              <h2 className="text-heading-lg mt-7">İrsin davamı</h2>
+              <p className="mt-7 font-display text-3xl">Paris Malik Hüseynqulu xan qızı</p>
+              <p className="mt-7 max-w-2xl leading-8 text-muted-foreground">
+                Useynkhan1792 brendinin qurucusu və Hüseynqulu xanın nəslinin nümayəndəsidir. Brend vasitəsilə ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
+              </p>
+              <LinkButton className="mt-10" href="/about" variant="outline">
+                Haqqımızda <ArrowRight aria-hidden="true" size={15} />
+              </LinkButton>
+            </div>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="lg">
+        <Container wide>
+          <SectionHeading eyebrow="Yanaşmamız" title="Yaddaşdan müasir ifadəyə" align="center" />
+          <div className="mt-16 grid gap-px bg-border md:grid-cols-3">
+            {values.map((value) => {
+              const Icon = value.icon;
+              return (
+                <article className="bg-background p-8 sm:p-10" key={value.title}>
+                  <Icon className="text-antique-gold" aria-hidden="true" size={24} strokeWidth={1.4} />
+                  <h3 className="mt-8 font-display text-3xl">{value.title}</h3>
+                  <p className="mt-5 text-sm leading-7 text-muted-foreground">{value.description}</p>
+                </article>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="surface">
+        <Container wide>
+          <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
+            <SectionHeading eyebrow="Sifariş və çatdırılma" title="Sadə və şəffaf sifariş prosesi" />
+            <Link className="text-xs font-semibold tracking-[0.14em] uppercase hover:text-antique-gold" href="/delivery">
+              Ətraflı məlumat
+            </Link>
+          </div>
+          <div className="mt-14 grid gap-px bg-border sm:grid-cols-2 xl:grid-cols-4">
+            {deliveryItems.map((item) => {
+              const Icon = item.icon;
+              return (
+                <div className="bg-surface p-7" key={item.title}>
+                  <Icon className="text-caspian" aria-hidden="true" size={21} strokeWidth={1.5} />
+                  <h3 className="mt-6 text-sm font-semibold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground">{item.detail}</p>
+                </div>
+              );
+            })}
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="dark" spacing="lg">
+        <Container>
+          <div className="relative overflow-hidden text-center">
+            <HeritagePattern className="absolute top-0 left-1/2 w-[35rem] -translate-x-1/2 opacity-[0.12]" />
+            <MessageCircle className="relative mx-auto text-antique-gold" aria-hidden="true" size={27} strokeWidth={1.4} />
+            <h2 className="text-heading-lg relative mt-8 text-balance">Seçiminizi birlikdə dəqiqləşdirək</h2>
+            <p className="relative mx-auto mt-6 max-w-xl leading-8 text-stone">
+              Məhsullar, çatdırılma və sifariş haqqında suallarınızı birbaşa WhatsApp vasitəsilə cavablandıraq.
+            </p>
+            <a className={buttonClassName({ variant: "secondary", size: "lg", className: "relative mt-10" })} href={createWhatsAppUrl()} target="_blank" rel="noopener noreferrer">
+              WhatsApp ilə əlaqə saxla
+            </a>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="lg">
+        <Container>
+          <div className="grid gap-10 border-y border-border py-14 md:grid-cols-[1fr_auto] md:items-center">
+            <div>
+              <p className="text-eyebrow text-antique-gold">{brand.slogan}</p>
+              <h2 className="text-heading-md mt-6">Brendin vizual dünyasını izləyin</h2>
+              <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">
+                Kolleksiya yenilikləri və Bakıdan ilhamlanan hekayələr üçün bizi Instagram-da izləyin.
+              </p>
+            </div>
+            <a className={buttonClassName({ variant: "outline", size: "lg" })} href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+              <Instagram aria-hidden="true" size={17} /> Instagram-da izlə
+            </a>
+          </div>
+        </Container>
+      </Section>
+    </>
+  );
+}
