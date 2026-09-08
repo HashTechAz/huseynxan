@@ -26,7 +26,10 @@ type ProductsPageProps = {
 
 export default async function ProductsPage({ searchParams }: ProductsPageProps) {
   const state = parseCatalogQuery(await searchParams);
-  const filteredProducts = filterProducts(getAllProducts(), catalogStateToFilters(state));
+  const catalogProducts = getAllProducts().filter(
+    (product) => product.slug === "four-scents-of-baku",
+  );
+  const filteredProducts = filterProducts(catalogProducts, catalogStateToFilters(state));
   const visibleProducts = sortProducts(filteredProducts, catalogStateToSort(state));
   const activeFilterCount = countActiveFilters(state);
 

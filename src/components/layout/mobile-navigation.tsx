@@ -64,16 +64,16 @@ export function MobileNavigation() {
               <X aria-hidden="true" size={20} />
             </IconButton>
           </div>
-          <nav className="flex flex-1 items-center px-5 py-12 sm:px-8" aria-label="Mobil naviqasiya">
+          <nav className="flex flex-1 items-center overflow-x-hidden px-5 py-8 sm:px-8 sm:py-12" aria-label="Mobil naviqasiya">
             <ul className="w-full">
               {primaryNavigation.map((item, index) => (
                 <li className="border-b border-border" key={item.href}>
                   <Link
-                    className="flex items-baseline gap-5 py-5 font-display text-3xl leading-none transition-colors hover:text-antique-gold sm:text-4xl"
+                    className="flex min-w-0 items-baseline gap-3 py-4 font-display text-[clamp(1.65rem,6.5vw,2.5rem)] leading-[1.08] whitespace-nowrap transition-colors hover:text-antique-gold sm:gap-5 sm:py-5"
                     href={item.href}
                     onClick={() => setIsOpen(false)}
                   >
-                    <span className="font-sans text-[0.625rem] text-antique-gold">0{index + 1}</span>
+                    <span className="w-5 shrink-0 font-sans text-[0.625rem] text-antique-gold">0{index + 1}</span>
                     {item.label}
                   </Link>
                 </li>

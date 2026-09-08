@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -14,8 +15,7 @@ import {
 
 import { HomeHero } from "@/components/home/home-hero";
 import { AddToCartButton } from "@/components/product/add-to-cart-button";
-import { ProductCard } from "@/components/product/product-card";
-import { ProductImage } from "@/components/product/product-image";
+import { FounderImageSlot } from "@/components/shared/founder-image-slot";
 import { HeritagePattern } from "@/components/shared/heritage-pattern";
 import { JsonLd } from "@/components/shared/json-ld";
 import { Badge } from "@/components/ui/badge";
@@ -27,7 +27,7 @@ import { Price } from "@/components/ui/price";
 import { Section } from "@/components/ui/section";
 import { SectionHeading } from "@/components/ui/section-heading";
 import { brand } from "@/data/brand";
-import { getAllProducts, getProductBySlug } from "@/lib/products";
+import { getProductBySlug } from "@/lib/products";
 import { absoluteUrl, siteConfig } from "@/lib/site";
 import { createPageMetadata } from "@/lib/metadata";
 import { createWhatsAppUrl } from "@/lib/whatsapp";
@@ -70,12 +70,48 @@ const deliveryItems = [
   { title: "Çatdırılma haqqı", detail: "WhatsApp-da dəqiqləşir", icon: MessageCircle },
 ] as const;
 
+const fragranceProfileCopy = [
+  {
+    slug: "baku-nights",
+    index: "01",
+    family: "Oriental",
+    description: "Dərin, isti və sirli axşam xarakteri.",
+    imageSrc: "/images/products/baku-nights/baku-nights-profile.webp",
+    imageAlt: "Baku Nights ətir flakonu isti Bakı daşı fonunda",
+  },
+  {
+    slug: "black-town",
+    index: "02",
+    family: "Smoky",
+    description: "Güclü, qaranlıq və sənaye ruhlu xarakter.",
+    imageSrc: "/images/products/black-town/black-town-profile.webp",
+    imageAlt: "Black Town ətir flakonu isti Bakı daşı fonunda",
+  },
+  {
+    slug: "caspian-wave",
+    index: "03",
+    family: "Aquatic",
+    description: "Təmiz, azad və enerjili xarakter.",
+    imageSrc: "/images/products/caspian-wave/caspian-wave-profile.webp",
+    imageAlt: "Caspian Wave ətir flakonu isti Bakı daşı fonunda",
+  },
+  {
+    slug: "kings-town",
+    index: "04",
+    family: "Woody",
+    description: "Nəcib, balanslı və xarakterli imza.",
+    imageSrc: "/images/products/kings-town/kings-town-profile.webp",
+    imageAlt: "King’s Town ətir flakonu isti Bakı daşı fonunda",
+  },
+] as const;
+
 export default function HomePage() {
-  const individualFragrances = getAllProducts().filter((product) => product.category === "fragrances");
+  const fragranceProfiles = fragranceProfileCopy.map((profile) => ({
+    ...profile,
+    product: requireProduct(profile.slug),
+  }));
   const featured = requireProduct("kings-town");
   const discoverySet = requireProduct("four-scents-of-baku");
-  const featuredImage = featured.images[0];
-  const discoveryImage = discoverySet.images[0];
   const organizationJsonLd = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -96,18 +132,52 @@ export default function HomePage() {
         <Container wide>
           <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end">
             <SectionHeading
-              eyebrow="Four Scents of Baku"
+              eyebrow="The Four Scents of Baku"
               title="Şəhərin dörd fərqli ovqatı"
-              description="Gecənin sirrindən Xəzərin açıq nəfəsinə qədər — hər kompozisiya Bakının ayrı bir təəssüratını daşıyır."
+              description="Gecənin sirrindən Xəzərin açıq nəfəsinə qədər — dörd fərqli kompozisiya, bir kolleksiyada."
             />
-            <Link className="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:text-antique-gold" href="/products">
-              Bütün məhsullar <ArrowRight aria-hidden="true" size={16} />
+            <Link className="inline-flex items-center gap-3 text-xs font-semibold tracking-[0.14em] uppercase transition-colors hover:text-antique-gold" href="/products/four-scents-of-baku">
+              Kolleksiyanı kəşf et <ArrowRight aria-hidden="true" size={16} />
             </Link>
           </div>
           <div className="mt-16 grid gap-x-6 gap-y-14 sm:grid-cols-2 xl:grid-cols-4">
-            {individualFragrances.map((product) => (
-              <ProductCard key={product.id} product={product} />
-            ))}
+            {fragranceProfiles.map(({ product, index, family, description, imageSrc, imageAlt }) => {
+              return (
+                <article key={product.id}>
+                  <div className="relative aspect-[4/5] overflow-hidden border border-border bg-surface">
+                    <Image
+                      src={imageSrc}
+                      alt={imageAlt}
+                      fill
+                      sizes="(min-width: 1280px) 25vw, (min-width: 640px) 50vw, 100vw"
+                      className="object-cover"
+                    />
+                  </div>
+                  <div className="mt-6">
+                    <p className="text-[0.625rem] font-semibold tracking-[0.14em] text-antique-gold uppercase">
+                      {index} · {family}
+                    </p>
+                    <h3 className="mt-3 font-display text-3xl leading-none">{product.name}</h3>
+                    <p className="mt-3 text-sm leading-6 text-muted-foreground">{description}</p>
+                  </div>
+                </article>
+              );
+            })}
+          </div>
+          <div className="mt-16 grid gap-8 border-t border-border pt-9 md:grid-cols-[1fr_auto] md:items-end">
+            <div>
+              <p className="text-[0.625rem] font-semibold tracking-[0.18em] text-antique-gold uppercase">
+                Useynkhan 1792
+              </p>
+              <h3 className="mt-3 font-display text-3xl">Signature Set</h3>
+              <p className="mt-4 text-xs tracking-[0.12em] text-muted-foreground uppercase">
+                4 × 13 ml · Eau de Parfum
+              </p>
+              <p className="mt-4 text-sm text-muted-foreground">Dörd ətir. Bir kolleksiya.</p>
+            </div>
+            <LinkButton href="/products/four-scents-of-baku" variant="outline">
+              Seti kəşf et
+            </LinkButton>
           </div>
         </Container>
       </Section>
@@ -115,9 +185,14 @@ export default function HomePage() {
       <Section tone="surface" spacing="lg">
         <Container>
           <div className="grid gap-14 lg:grid-cols-[0.8fr_1.2fr] lg:items-center lg:gap-24">
-            <div className="relative min-h-80 overflow-hidden border border-border bg-background p-10 sm:min-h-[28rem]">
-              <p className="font-display text-[8rem] leading-none text-antique-gold/20 sm:text-[12rem]">1792</p>
-              <HeritagePattern className="absolute right-[-5rem] bottom-12 w-[28rem] opacity-[0.18]" />
+            <div className="relative aspect-[89/69] overflow-hidden border border-border bg-background">
+              <Image
+                src="/images/story/four-scents-heritage-set.webp"
+                alt="Useynkhan1792 Four Scents of Baku kolleksiyasının açıq qutuda dörd ətiri"
+                fill
+                sizes="(min-width: 1280px) 32rem, (min-width: 1024px) 40vw, 100vw"
+                className="object-cover"
+              />
             </div>
             <div>
               <SectionHeading
@@ -126,7 +201,7 @@ export default function HomePage() {
               />
               <div className="mt-8 space-y-5 leading-8 text-muted-foreground">
                 <p>
-                  1792 Hüseynqulu xanın doğum ilidir. Bakı xanı kimi onun adı şəhərin tarixi iradəsi və yaddaşı ilə bağlıdır.
+                  1792 Useynqulu xanın doğum ilidir. Bakı xanı kimi onun adı şəhərin tarixi iradəsi və yaddaşı ilə bağlıdır.
                 </p>
                 <p>
                   Useynkhan1792 bu tarixi adı müasir niş parfümeriya dili ilə davam etdirir; keçmişi romantikləşdirmədən, Bakının daşında, küləyində və çoxqatlı xarakterində yaşayan izlərə diqqət yönəldir.
@@ -143,16 +218,15 @@ export default function HomePage() {
       <Section tone="dark" spacing="lg">
         <Container wide>
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center lg:gap-24">
-            {featuredImage ? (
-              <ProductImage
-                image={featuredImage}
+            <div className="relative aspect-[4/5] overflow-hidden border border-stone/20 bg-dark-section">
+              <Image
+                src="/images/products/kings-town/kings-town-editorial.webp"
+                alt="King’s Town ətri və Useynkhan1792 kolleksiyasının kraft qablaşdırması"
+                fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-[4/5] border border-stone/20 bg-dark-section"
-                imageClassName="opacity-90"
+                className="object-cover"
               />
-            ) : (
-              <div className="aspect-[4/5] border border-stone/20" aria-hidden="true" />
-            )}
+            </div>
             <div className="max-w-xl">
               <p className="text-eyebrow text-antique-gold">Seçilmiş ətir</p>
               <h2 className="text-display-lg mt-7">{featured.name}</h2>
@@ -193,15 +267,15 @@ export default function HomePage() {
                 </LinkButton>
               </div>
             </div>
-            {discoveryImage ? (
-              <ProductImage
-                image={discoveryImage}
+            <div className="relative aspect-square overflow-hidden border border-border bg-surface">
+              <Image
+                src="/images/products/four-scents-of-baku/discovery-set-packaging.webp"
+                alt="Useynkhan1792 Four Scents of Baku Discovery Set kraft qutusu"
+                fill
                 sizes="(min-width: 1024px) 50vw, 100vw"
-                className="aspect-[5/4] border border-border bg-surface"
+                className="object-cover"
               />
-            ) : (
-              <div className="aspect-[5/4] border border-border bg-surface" aria-hidden="true" />
-            )}
+            </div>
           </div>
         </Container>
       </Section>
@@ -209,16 +283,13 @@ export default function HomePage() {
       <Section tone="surface" spacing="lg">
         <Container>
           <div className="grid gap-12 lg:grid-cols-[0.75fr_1.25fr] lg:items-center lg:gap-24">
-            <div className="relative flex aspect-[4/5] items-center justify-center overflow-hidden border border-border bg-background" role="img" aria-label="Paris Malik Hüseynqulu xan qızı üçün portret yeri">
-              <HeritagePattern className="absolute w-[26rem] rotate-90 opacity-[0.14]" />
-              <div className="relative flex size-28 items-center justify-center border border-antique-gold/40 font-display text-4xl text-antique-gold">PM</div>
-            </div>
+            <FounderImageSlot />
             <div>
               <p className="text-eyebrow text-antique-gold">Qurucu</p>
               <h2 className="text-heading-lg mt-7">İrsin davamı</h2>
-              <p className="mt-7 font-display text-3xl">Paris Malik Hüseynqulu xan qızı</p>
+              <p className="mt-7 font-display text-3xl">Paris Malik Useynqulu xan qızı</p>
               <p className="mt-7 max-w-2xl leading-8 text-muted-foreground">
-                Useynkhan1792 brendinin qurucusu və Hüseynqulu xanın nəslinin nümayəndəsidir. Brend vasitəsilə ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
+                Useynkhan1792 brendinin qurucusu və Useynqulu xanın nəslinin nümayəndəsidir. Brend vasitəsilə ailə yaddaşını, Bakının tarixi xarakterini və müasir niş parfümeriyanı bir araya gətirir.
               </p>
               <LinkButton className="mt-10" href="/about" variant="outline">
                 Haqqımızda <ArrowRight aria-hidden="true" size={15} />
@@ -285,22 +356,22 @@ export default function HomePage() {
         </Container>
       </Section>
 
-      <Section spacing="lg">
-        <Container>
-          <div className="grid gap-10 border-y border-border py-14 md:grid-cols-[1fr_auto] md:items-center">
-            <div>
-              <p className="text-eyebrow text-antique-gold">{brand.slogan}</p>
-              <h2 className="text-heading-md mt-6">Brendin vizual dünyasını izləyin</h2>
-              <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">
-                Kolleksiya yenilikləri və Bakıdan ilhamlanan hekayələr üçün bizi Instagram-da izləyin.
-              </p>
+      {siteConfig.instagramUrl ? (
+        <Section spacing="lg">
+          <Container>
+            <div className="grid gap-10 border-y border-border py-14 md:grid-cols-[1fr_auto] md:items-center">
+              <div>
+                <p className="text-eyebrow text-antique-gold">{brand.slogan}</p>
+                <h2 className="text-heading-md mt-6">Brendin vizual dünyasını izləyin</h2>
+                <p className="mt-5 max-w-xl text-sm leading-7 text-muted-foreground">Kolleksiya yenilikləri və Bakıdan ilhamlanan hekayələr üçün bizi Instagram-da izləyin.</p>
+              </div>
+              <a className={buttonClassName({ variant: "outline", size: "lg" })} href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
+                <Instagram aria-hidden="true" size={17} /> Instagram-da izlə
+              </a>
             </div>
-            <a className={buttonClassName({ variant: "outline", size: "lg" })} href={siteConfig.instagramUrl} target="_blank" rel="noopener noreferrer">
-              <Instagram aria-hidden="true" size={17} /> Instagram-da izlə
-            </a>
-          </div>
-        </Container>
-      </Section>
+          </Container>
+        </Section>
+      ) : null}
     </>
   );
 }
